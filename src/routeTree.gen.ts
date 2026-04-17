@@ -10,10 +10,14 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WatchlistRouteImport } from './routes/watchlist'
+import { Route as VipRouteImport } from './routes/vip'
 import { Route as SellRouteImport } from './routes/sell'
+import { Route as RegisterRouteImport } from './routes/register'
 import { Route as PartsRouteImport } from './routes/parts'
 import { Route as MarketReportRouteImport } from './routes/market-report'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as ListingsRouteImport } from './routes/listings'
+import { Route as DealerRouteImport } from './routes/dealer'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as BrandsRouteImport } from './routes/brands'
@@ -28,9 +32,19 @@ const WatchlistRoute = WatchlistRouteImport.update({
   path: '/watchlist',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VipRoute = VipRouteImport.update({
+  id: '/vip',
+  path: '/vip',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SellRoute = SellRouteImport.update({
   id: '/sell',
   path: '/sell',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PartsRoute = PartsRouteImport.update({
@@ -43,9 +57,19 @@ const MarketReportRoute = MarketReportRouteImport.update({
   path: '/market-report',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ListingsRoute = ListingsRouteImport.update({
   id: '/listings',
   path: '/listings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DealerRoute = DealerRouteImport.update({
+  id: '/dealer',
+  path: '/dealer',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -97,10 +121,14 @@ export interface FileRoutesByFullPath {
   '/brands': typeof BrandsRoute
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
+  '/dealer': typeof DealerRoute
   '/listings': typeof ListingsRouteWithChildren
+  '/login': typeof LoginRoute
   '/market-report': typeof MarketReportRoute
   '/parts': typeof PartsRoute
+  '/register': typeof RegisterRoute
   '/sell': typeof SellRoute
+  '/vip': typeof VipRoute
   '/watchlist': typeof WatchlistRoute
   '/listings/$id': typeof ListingsIdRoute
 }
@@ -112,10 +140,14 @@ export interface FileRoutesByTo {
   '/brands': typeof BrandsRoute
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
+  '/dealer': typeof DealerRoute
   '/listings': typeof ListingsRouteWithChildren
+  '/login': typeof LoginRoute
   '/market-report': typeof MarketReportRoute
   '/parts': typeof PartsRoute
+  '/register': typeof RegisterRoute
   '/sell': typeof SellRoute
+  '/vip': typeof VipRoute
   '/watchlist': typeof WatchlistRoute
   '/listings/$id': typeof ListingsIdRoute
 }
@@ -128,10 +160,14 @@ export interface FileRoutesById {
   '/brands': typeof BrandsRoute
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
+  '/dealer': typeof DealerRoute
   '/listings': typeof ListingsRouteWithChildren
+  '/login': typeof LoginRoute
   '/market-report': typeof MarketReportRoute
   '/parts': typeof PartsRoute
+  '/register': typeof RegisterRoute
   '/sell': typeof SellRoute
+  '/vip': typeof VipRoute
   '/watchlist': typeof WatchlistRoute
   '/listings/$id': typeof ListingsIdRoute
 }
@@ -145,10 +181,14 @@ export interface FileRouteTypes {
     | '/brands'
     | '/categories'
     | '/contact'
+    | '/dealer'
     | '/listings'
+    | '/login'
     | '/market-report'
     | '/parts'
+    | '/register'
     | '/sell'
+    | '/vip'
     | '/watchlist'
     | '/listings/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -160,10 +200,14 @@ export interface FileRouteTypes {
     | '/brands'
     | '/categories'
     | '/contact'
+    | '/dealer'
     | '/listings'
+    | '/login'
     | '/market-report'
     | '/parts'
+    | '/register'
     | '/sell'
+    | '/vip'
     | '/watchlist'
     | '/listings/$id'
   id:
@@ -175,10 +219,14 @@ export interface FileRouteTypes {
     | '/brands'
     | '/categories'
     | '/contact'
+    | '/dealer'
     | '/listings'
+    | '/login'
     | '/market-report'
     | '/parts'
+    | '/register'
     | '/sell'
+    | '/vip'
     | '/watchlist'
     | '/listings/$id'
   fileRoutesById: FileRoutesById
@@ -191,10 +239,14 @@ export interface RootRouteChildren {
   BrandsRoute: typeof BrandsRoute
   CategoriesRoute: typeof CategoriesRoute
   ContactRoute: typeof ContactRoute
+  DealerRoute: typeof DealerRoute
   ListingsRoute: typeof ListingsRouteWithChildren
+  LoginRoute: typeof LoginRoute
   MarketReportRoute: typeof MarketReportRoute
   PartsRoute: typeof PartsRoute
+  RegisterRoute: typeof RegisterRoute
   SellRoute: typeof SellRoute
+  VipRoute: typeof VipRoute
   WatchlistRoute: typeof WatchlistRoute
 }
 
@@ -207,11 +259,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WatchlistRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/vip': {
+      id: '/vip'
+      path: '/vip'
+      fullPath: '/vip'
+      preLoaderRoute: typeof VipRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sell': {
       id: '/sell'
       path: '/sell'
       fullPath: '/sell'
       preLoaderRoute: typeof SellRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/parts': {
@@ -228,11 +294,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MarketReportRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/listings': {
       id: '/listings'
       path: '/listings'
       fullPath: '/listings'
       preLoaderRoute: typeof ListingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dealer': {
+      id: '/dealer'
+      path: '/dealer'
+      fullPath: '/dealer'
+      preLoaderRoute: typeof DealerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -314,10 +394,14 @@ const rootRouteChildren: RootRouteChildren = {
   BrandsRoute: BrandsRoute,
   CategoriesRoute: CategoriesRoute,
   ContactRoute: ContactRoute,
+  DealerRoute: DealerRoute,
   ListingsRoute: ListingsRouteWithChildren,
+  LoginRoute: LoginRoute,
   MarketReportRoute: MarketReportRoute,
   PartsRoute: PartsRoute,
+  RegisterRoute: RegisterRoute,
   SellRoute: SellRoute,
+  VipRoute: VipRoute,
   WatchlistRoute: WatchlistRoute,
 }
 export const routeTree = rootRouteImport
