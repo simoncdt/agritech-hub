@@ -67,7 +67,7 @@ function DetailPage() {
                 </div>
               </div>
               <div className="grid grid-cols-4 gap-1 p-1">
-                {listing.images.map((img, i) => (
+                {listing.images.map((img: string, i: number) => (
                   <button
                     key={i}
                     onClick={() => setActiveImg(i)}
