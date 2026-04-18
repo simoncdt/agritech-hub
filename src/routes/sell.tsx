@@ -1,7 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Camera, FileText, Tag, MapPin, CheckCircle2 } from "lucide-react";
+import { useState } from "react";
+import { Camera, FileText, Tag, MapPin, Sparkles } from "lucide-react";
 import { PageLayout } from "@/components/PageLayout";
+import { ContactDialog } from "@/components/ContactDialog";
 import { useT } from "@/lib/i18n";
+import { CATEGORIES, BRANDS } from "@/lib/data";
 
 export const Route = createFileRoute("/sell")({
   component: SellPage,
@@ -9,25 +12,35 @@ export const Route = createFileRoute("/sell")({
 
 function SellPage() {
   const { t, lang } = useT();
+  const [open, setOpen] = useState(false);
+  const [brand, setBrand] = useState("");
+  const [model, setModel] = useState("");
+  const [year, setYear] = useState("");
+  const [category, setCategory] = useState("");
+
   const steps = [
-    { icon: Camera, t: lang === "fr" ? "Photographiez votre machine" : "Photograph your machine", d: lang === "fr" ? "Jusqu'à 40 photos haute résolution + vidéos." : "Up to 40 high-res photos + videos." },
-    { icon: FileText, t: lang === "fr" ? "Renseignez les détails" : "Fill in details", d: lang === "fr" ? "Marque, modèle, état, n° de série, description." : "Brand, model, condition, serial #, description." },
-    { icon: Tag, t: lang === "fr" ? "Fixez votre prix" : "Set your price", d: lang === "fr" ? "Notre IA suggère un prix de marché juste." : "Our AI suggests a fair market price." },
-    { icon: MapPin, t: lang === "fr" ? "Publiez & vendez" : "Publish & sell", d: lang === "fr" ? "Visibilité immédiate auprès de milliers d'acheteurs." : "Instant visibility to thousands of buyers." },
+    { icon: Camera, t: lang === "fr" ? "Décrivez votre machine" : "Describe your machine", d: lang === "fr" ? "Marque, modèle, année et état général." : "Brand, model, year and overall condition." },
+    { icon: FileText, t: lang === "fr" ? "Nous vous contactons" : "We contact you", d: lang === "fr" ? "Notre équipe vous rappelle sous 24h ouvrées." : "Our team calls back within 24 business hours." },
+    { icon: Tag, t: lang === "fr" ? "Évaluation gratuite" : "Free valuation", d: lang === "fr" ? "Estimation du prix de marché juste basée sur l'IA." : "AI-based fair market value estimate." },
+    { icon: MapPin, t: lang === "fr" ? "Mise en vente" : "List for sale", d: lang === "fr" ? "Visibilité auprès de milliers d'acheteurs vérifiés." : "Visibility to thousands of verified buyers." },
   ];
 
   return (
     <PageLayout>
       <section className="bg-gradient-primary text-primary-foreground py-16">
         <div className="container-pro max-w-3xl">
-          <h1 className="font-display text-4xl md:text-5xl font-extrabold">{t("cta.sell")}</h1>
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-foreground/10 border border-primary-foreground/20 text-xs uppercase tracking-wider font-semibold">
+            <Sparkles className="h-3 w-3 text-accent" /> {lang === "fr" ? "Service vendeur" : "Seller service"}
+          </span>
+          <h1 className="mt-4 font-display text-4xl md:text-5xl font-extrabold">{t("cta.sell")}</h1>
           <p className="mt-4 text-primary-foreground/85">
             {lang === "fr"
-              ? "Atteignez des milliers d'acheteurs vérifiés en Amérique du Nord. Publication en moins de 5 minutes."
-              : "Reach thousands of verified buyers across North America. List in under 5 minutes."}
+              ? "Confiez-nous votre annonce. Notre équipe gère l'évaluation, la mise en valeur et la mise en relation avec des acheteurs vérifiés."
+              : "Let us handle your listing. Our team takes care of valuation, presentation and matching with verified buyers."}
           </p>
         </div>
       </section>
+
       <div className="container-pro py-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {steps.map(({ icon: Icon, t: title, d }, i) => (
           <div key={i} className="bg-card border border-border rounded-lg p-6 shadow-card relative">
@@ -40,27 +53,42 @@ function SellPage() {
           </div>
         ))}
       </div>
+
       <div className="container-pro pb-20">
-        <form className="bg-card border border-border rounded-lg shadow-card p-6 md:p-8 max-w-3xl mx-auto space-y-4" onSubmit={(e) => { e.preventDefault(); alert(lang === "fr" ? "Annonce publiée (démo)" : "Listing published (demo)"); }}>
-          <h2 className="font-display text-2xl font-bold">{lang === "fr" ? "Publier mon annonce" : "Publish my listing"}</h2>
+        <form
+          onSubmit={(e) => { e.preventDefault(); setOpen(true); }}
+          className="bg-card border border-border rounded-lg shadow-elegant p-6 md:p-8 max-w-3xl mx-auto space-y-4"
+        >
+          <h2 className="font-display text-2xl font-bold">
+            {lang === "fr" ? "Demander une évaluation gratuite" : "Request a free valuation"}
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            {lang === "fr" ? "Renseignez votre machine, nous revenons vers vous sous 24h." : "Tell us about your machine, we'll get back within 24h."}
+          </p>
           <div className="grid md:grid-cols-2 gap-4">
-            <input placeholder={lang === "fr" ? "Marque" : "Brand"} className="h-11 px-3 rounded-md border border-input bg-background text-sm" />
-            <input placeholder={lang === "fr" ? "Modèle" : "Model"} className="h-11 px-3 rounded-md border border-input bg-background text-sm" />
-            <input placeholder={lang === "fr" ? "Année" : "Year"} type="number" className="h-11 px-3 rounded-md border border-input bg-background text-sm" />
-            <input placeholder={lang === "fr" ? "Heures" : "Hours"} type="number" className="h-11 px-3 rounded-md border border-input bg-background text-sm" />
-            <input placeholder={lang === "fr" ? "Prix demandé (CAD)" : "Asking price (CAD)"} type="number" className="h-11 px-3 rounded-md border border-input bg-background text-sm" />
-            <input placeholder={t("detail.serial")} className="h-11 px-3 rounded-md border border-input bg-background text-sm" />
+            <select required value={category} onChange={(e) => setCategory(e.target.value)} className="h-11 px-3 rounded-md border border-input bg-background text-sm">
+              <option value="">{lang === "fr" ? "Catégorie" : "Category"} *</option>
+              {CATEGORIES.map((c) => <option key={c.slug} value={c.slug}>{lang === "fr" ? c.nameFr : c.nameEn}</option>)}
+            </select>
+            <select required value={brand} onChange={(e) => setBrand(e.target.value)} className="h-11 px-3 rounded-md border border-input bg-background text-sm">
+              <option value="">{lang === "fr" ? "Marque" : "Brand"} *</option>
+              {BRANDS.map((b) => <option key={b}>{b}</option>)}
+            </select>
+            <input required value={model} onChange={(e) => setModel(e.target.value)} placeholder={(lang === "fr" ? "Modèle" : "Model") + " *"} className="h-11 px-3 rounded-md border border-input bg-background text-sm" />
+            <input required value={year} onChange={(e) => setYear(e.target.value)} placeholder={(lang === "fr" ? "Année" : "Year") + " *"} type="number" min={1980} max={2026} className="h-11 px-3 rounded-md border border-input bg-background text-sm" />
           </div>
-          <textarea placeholder={t("detail.description")} rows={5} className="w-full px-3 py-2 rounded-md border border-input bg-background text-sm" />
-          <div className="border-2 border-dashed border-border rounded-md p-8 text-center text-sm text-muted-foreground">
-            <Camera className="h-8 w-8 mx-auto mb-2" />
-            {lang === "fr" ? "Glissez vos photos ici (jusqu'à 40)" : "Drop your photos here (up to 40)"}
-          </div>
-          <button className="w-full h-12 rounded-md bg-gradient-accent text-accent-foreground font-bold text-sm uppercase tracking-wider shadow-elegant inline-flex items-center justify-center gap-2">
-            <CheckCircle2 className="h-4 w-4" /> {lang === "fr" ? "Publier" : "Publish"}
+          <button className="w-full h-12 rounded-md bg-gradient-accent text-accent-foreground font-bold text-sm uppercase tracking-wider shadow-elegant">
+            {lang === "fr" ? "Continuer ma demande" : "Continue my request"}
           </button>
         </form>
       </div>
+
+      <ContactDialog
+        open={open}
+        onClose={() => setOpen(false)}
+        intent="sell"
+        vehicle={{ brand, model, year, category, title: `${year} ${brand} ${model}`.trim() }}
+      />
     </PageLayout>
   );
 }
