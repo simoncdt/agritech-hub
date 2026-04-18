@@ -78,9 +78,10 @@ export function Footer() {
             {t("footer.legal")}
           </h4>
           <ul className="space-y-2 text-sm text-primary-foreground/70">
-            <li><a href="#" className="hover:text-accent transition-smooth">{t("footer.terms")}</a></li>
-            <li><a href="#" className="hover:text-accent transition-smooth">{t("footer.privacy")}</a></li>
-            <li><a href="#" className="hover:text-accent transition-smooth">{t("footer.cookies")}</a></li>
+            <li><Link to="/terms" className="hover:text-accent transition-smooth">{t("footer.terms")}</Link></li>
+            <li><Link to="/privacy" className="hover:text-accent transition-smooth">{t("footer.privacy")}</Link></li>
+            <li><Link to="/cookies" className="hover:text-accent transition-smooth">{t("footer.cookies")}</Link></li>
+            <li><Link to="/legal" className="hover:text-accent transition-smooth">Mentions légales</Link></li>
           </ul>
         </div>
       </div>

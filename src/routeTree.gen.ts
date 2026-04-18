@@ -11,13 +11,17 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WatchlistRouteImport } from './routes/watchlist'
 import { Route as VipRouteImport } from './routes/vip'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SellRouteImport } from './routes/sell'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PartsRouteImport } from './routes/parts'
 import { Route as MarketReportRouteImport } from './routes/market-report'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ListingsRouteImport } from './routes/listings'
+import { Route as LegalRouteImport } from './routes/legal'
 import { Route as DealerRouteImport } from './routes/dealer'
+import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as BrandsRouteImport } from './routes/brands'
@@ -37,6 +41,11 @@ const VipRoute = VipRouteImport.update({
   path: '/vip',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SellRoute = SellRouteImport.update({
   id: '/sell',
   path: '/sell',
@@ -45,6 +54,11 @@ const SellRoute = SellRouteImport.update({
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PartsRoute = PartsRouteImport.update({
@@ -67,9 +81,19 @@ const ListingsRoute = ListingsRouteImport.update({
   path: '/listings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LegalRoute = LegalRouteImport.update({
+  id: '/legal',
+  path: '/legal',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DealerRoute = DealerRouteImport.update({
   id: '/dealer',
   path: '/dealer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookiesRoute = CookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -121,13 +145,17 @@ export interface FileRoutesByFullPath {
   '/brands': typeof BrandsRoute
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/dealer': typeof DealerRoute
+  '/legal': typeof LegalRoute
   '/listings': typeof ListingsRouteWithChildren
   '/login': typeof LoginRoute
   '/market-report': typeof MarketReportRoute
   '/parts': typeof PartsRoute
+  '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/sell': typeof SellRoute
+  '/terms': typeof TermsRoute
   '/vip': typeof VipRoute
   '/watchlist': typeof WatchlistRoute
   '/listings/$id': typeof ListingsIdRoute
@@ -140,13 +168,17 @@ export interface FileRoutesByTo {
   '/brands': typeof BrandsRoute
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/dealer': typeof DealerRoute
+  '/legal': typeof LegalRoute
   '/listings': typeof ListingsRouteWithChildren
   '/login': typeof LoginRoute
   '/market-report': typeof MarketReportRoute
   '/parts': typeof PartsRoute
+  '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/sell': typeof SellRoute
+  '/terms': typeof TermsRoute
   '/vip': typeof VipRoute
   '/watchlist': typeof WatchlistRoute
   '/listings/$id': typeof ListingsIdRoute
@@ -160,13 +192,17 @@ export interface FileRoutesById {
   '/brands': typeof BrandsRoute
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/dealer': typeof DealerRoute
+  '/legal': typeof LegalRoute
   '/listings': typeof ListingsRouteWithChildren
   '/login': typeof LoginRoute
   '/market-report': typeof MarketReportRoute
   '/parts': typeof PartsRoute
+  '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/sell': typeof SellRoute
+  '/terms': typeof TermsRoute
   '/vip': typeof VipRoute
   '/watchlist': typeof WatchlistRoute
   '/listings/$id': typeof ListingsIdRoute
@@ -181,13 +217,17 @@ export interface FileRouteTypes {
     | '/brands'
     | '/categories'
     | '/contact'
+    | '/cookies'
     | '/dealer'
+    | '/legal'
     | '/listings'
     | '/login'
     | '/market-report'
     | '/parts'
+    | '/privacy'
     | '/register'
     | '/sell'
+    | '/terms'
     | '/vip'
     | '/watchlist'
     | '/listings/$id'
@@ -200,13 +240,17 @@ export interface FileRouteTypes {
     | '/brands'
     | '/categories'
     | '/contact'
+    | '/cookies'
     | '/dealer'
+    | '/legal'
     | '/listings'
     | '/login'
     | '/market-report'
     | '/parts'
+    | '/privacy'
     | '/register'
     | '/sell'
+    | '/terms'
     | '/vip'
     | '/watchlist'
     | '/listings/$id'
@@ -219,13 +263,17 @@ export interface FileRouteTypes {
     | '/brands'
     | '/categories'
     | '/contact'
+    | '/cookies'
     | '/dealer'
+    | '/legal'
     | '/listings'
     | '/login'
     | '/market-report'
     | '/parts'
+    | '/privacy'
     | '/register'
     | '/sell'
+    | '/terms'
     | '/vip'
     | '/watchlist'
     | '/listings/$id'
@@ -239,13 +287,17 @@ export interface RootRouteChildren {
   BrandsRoute: typeof BrandsRoute
   CategoriesRoute: typeof CategoriesRoute
   ContactRoute: typeof ContactRoute
+  CookiesRoute: typeof CookiesRoute
   DealerRoute: typeof DealerRoute
+  LegalRoute: typeof LegalRoute
   ListingsRoute: typeof ListingsRouteWithChildren
   LoginRoute: typeof LoginRoute
   MarketReportRoute: typeof MarketReportRoute
   PartsRoute: typeof PartsRoute
+  PrivacyRoute: typeof PrivacyRoute
   RegisterRoute: typeof RegisterRoute
   SellRoute: typeof SellRoute
+  TermsRoute: typeof TermsRoute
   VipRoute: typeof VipRoute
   WatchlistRoute: typeof WatchlistRoute
 }
@@ -266,6 +318,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VipRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sell': {
       id: '/sell'
       path: '/sell'
@@ -278,6 +337,13 @@ declare module '@tanstack/react-router' {
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/parts': {
@@ -308,11 +374,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ListingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/legal': {
+      id: '/legal'
+      path: '/legal'
+      fullPath: '/legal'
+      preLoaderRoute: typeof LegalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dealer': {
       id: '/dealer'
       path: '/dealer'
       fullPath: '/dealer'
       preLoaderRoute: typeof DealerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -394,13 +474,17 @@ const rootRouteChildren: RootRouteChildren = {
   BrandsRoute: BrandsRoute,
   CategoriesRoute: CategoriesRoute,
   ContactRoute: ContactRoute,
+  CookiesRoute: CookiesRoute,
   DealerRoute: DealerRoute,
+  LegalRoute: LegalRoute,
   ListingsRoute: ListingsRouteWithChildren,
   LoginRoute: LoginRoute,
   MarketReportRoute: MarketReportRoute,
   PartsRoute: PartsRoute,
+  PrivacyRoute: PrivacyRoute,
   RegisterRoute: RegisterRoute,
   SellRoute: SellRoute,
+  TermsRoute: TermsRoute,
   VipRoute: VipRoute,
   WatchlistRoute: WatchlistRoute,
 }
