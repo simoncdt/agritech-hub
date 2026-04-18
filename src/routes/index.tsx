@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { ChevronRight, Sparkles, TrendingUp, ShieldCheck, Zap, Search, ArrowRight } from "lucide-react";
+import { ChevronRight, Search, ArrowRight } from "lucide-react";
 import { PageLayout } from "@/components/PageLayout";
 import { CategoryIcon } from "@/components/CategoryIcon";
 import { ListingCard } from "@/components/ListingCard";
@@ -37,11 +37,7 @@ function HomePage() {
         </div>
         <div className="relative container-pro py-16 md:py-28 lg:py-36 text-primary-foreground">
           <div className="max-w-3xl">
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-foreground/10 backdrop-blur border border-primary-foreground/20 text-xs uppercase tracking-wider font-semibold">
-              <Sparkles className="h-3 w-3 text-accent" />
-              {lang === "fr" ? "Plateforme #1 au Canada" : "#1 Marketplace in Canada"}
-            </span>
-            <h1 className="mt-5 font-display text-4xl md:text-6xl lg:text-7xl font-extrabold leading-[0.95] tracking-tight">
+            <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-extrabold leading-[0.95] tracking-tight">
               {t("home.heroTitle")}
             </h1>
             <p className="mt-5 text-base md:text-lg text-primary-foreground/85 max-w-2xl">
@@ -91,17 +87,6 @@ function HomePage() {
               </div>
             </form>
 
-            <div className="mt-6 flex flex-wrap gap-3 text-xs">
-              {[
-                { icon: ShieldCheck, label: lang === "fr" ? "Vendeurs vérifiés" : "Verified sellers" },
-                { icon: TrendingUp, label: lang === "fr" ? "Mise à jour quotidienne" : "Daily updates" },
-                { icon: Zap, label: lang === "fr" ? "Recherche IA" : "AI-powered search" },
-              ].map(({ icon: Icon, label }, i) => (
-                <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-foreground/10 border border-primary-foreground/20 backdrop-blur">
-                  <Icon className="h-3.5 w-3.5 text-accent" /> {label}
-                </span>
-              ))}
-            </div>
           </div>
         </div>
       </section>

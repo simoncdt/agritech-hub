@@ -115,7 +115,7 @@ function DetailPage() {
               </h2>
               <dl className="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-border">
                 <div className="divide-y divide-border">
-                  {listing.specs.slice(0, 3).map((s) => (
+                  {listing.specs.slice(0, 3).map((s: { label: string; value: string }) => (
                     <div key={s.label} className="px-6 py-4 flex justify-between gap-4">
                       <dt className="text-sm text-muted-foreground">{s.label}</dt>
                       <dd className="text-sm font-semibold text-foreground">{s.value}</dd>
@@ -123,7 +123,7 @@ function DetailPage() {
                   ))}
                 </div>
                 <div className="divide-y divide-border">
-                  {listing.specs.slice(3).map((s) => (
+                  {listing.specs.slice(3).map((s: { label: string; value: string }) => (
                     <div key={s.label} className="px-6 py-4 flex justify-between gap-4">
                       <dt className="text-sm text-muted-foreground">{s.label}</dt>
                       <dd className="text-sm font-semibold text-foreground">{s.value}</dd>
@@ -179,7 +179,7 @@ function DetailPage() {
               <h3 className="font-display text-base font-bold mb-3">{t("detail.seller")}</h3>
               <div className="flex items-start gap-3">
                 <div className="h-12 w-12 rounded-full bg-gradient-primary flex items-center justify-center text-primary-foreground font-bold">
-                  {listing.seller.name.split(" ").map((w) => w[0]).slice(0, 2).join("")}
+                  {listing.seller.name.split(" ").map((w: string) => w[0]).slice(0, 2).join("")}
                 </div>
                 <div>
                   <p className="font-semibold text-sm">{listing.seller.name}</p>
