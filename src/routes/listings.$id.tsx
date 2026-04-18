@@ -1,8 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { Heart, Phone, Mail, MapPin, Calendar, Clock, Truck, Calculator, Share2, ChevronRight, Star } from "lucide-react";
+import { Heart, Phone, Mail, MapPin, Calendar, Clock, Truck, Calculator, Share2, ChevronRight, Star, ShoppingCart, Gavel } from "lucide-react";
 import { PageLayout } from "@/components/PageLayout";
 import { ListingCard } from "@/components/ListingCard";
+import { ContactDialog, type ContactIntent } from "@/components/ContactDialog";
 import { useT } from "@/lib/i18n";
 import { useWatch } from "@/lib/watchlist";
 import { LISTINGS, formatPrice } from "@/lib/data";
@@ -32,9 +33,11 @@ function DetailPage() {
   const saved = has(listing.id);
   const [activeImg, setActiveImg] = useState(0);
   const [months, setMonths] = useState(60);
+  const [dialog, setDialog] = useState<ContactIntent | null>(null);
 
   const monthly = Math.round((listing.price * 1.08) / months);
   const related = LISTINGS.filter((l) => l.category === listing.category && l.id !== listing.id).slice(0, 4);
+  const isAuction = !!listing.auction;
 
   return (
     <PageLayout>
@@ -49,7 +52,6 @@ function DetailPage() {
 
         <div className="grid lg:grid-cols-[1fr_400px] gap-8">
           <div>
-            {/* Gallery */}
             <div className="bg-card rounded-lg overflow-hidden border border-border shadow-card">
               <div className="aspect-[16/10] bg-secondary relative">
                 <img src={listing.images[activeImg]} alt={listing.title} className="h-full w-full object-cover" />
@@ -57,6 +59,11 @@ function DetailPage() {
                   {listing.featured && (
                     <span className="px-2 py-1 rounded text-[10px] font-bold tracking-wider bg-gradient-accent text-accent-foreground">
                       {t("listing.featuredBadge")}
+                    </span>
+                  )}
+                  {isAuction && (
+                    <span className="px-2 py-1 rounded text-[10px] font-bold tracking-wider bg-foreground text-background">
+                      {t("listing.auctionBadge")}
                     </span>
                   )}
                   {listing.condition === "new" && (
@@ -81,7 +88,6 @@ function DetailPage() {
               </div>
             </div>
 
-            {/* Title + actions */}
             <div className="mt-6 flex flex-wrap items-start justify-between gap-4">
               <div>
                 <h1 className="font-display text-3xl md:text-4xl font-extrabold text-foreground leading-tight">{listing.title}</h1>
@@ -108,7 +114,6 @@ function DetailPage() {
               </div>
             </div>
 
-            {/* Specs */}
             <section className="mt-8 bg-card border border-border rounded-lg shadow-card overflow-hidden">
               <h2 className="px-6 py-4 font-display text-lg font-bold border-b border-border bg-surface-soft">
                 {t("detail.specs")}
@@ -137,29 +142,44 @@ function DetailPage() {
               </dl>
             </section>
 
-            {/* Description */}
             <section className="mt-6 bg-card border border-border rounded-lg shadow-card p-6">
               <h2 className="font-display text-lg font-bold mb-3">{t("detail.description")}</h2>
               <p className="text-sm text-foreground/80 leading-relaxed">{listing.description}</p>
             </section>
           </div>
 
-          {/* Sidebar */}
           <aside className="space-y-4 lg:sticky lg:top-32 self-start">
             <div className="bg-card border border-border rounded-lg shadow-elegant p-6">
               <p className="text-xs uppercase tracking-wider text-muted-foreground">CAD</p>
               <p className="font-display text-4xl font-extrabold text-primary">{formatPrice(listing.price)}</p>
               <div className="mt-4 grid gap-2">
-                <a href={`tel:${listing.seller.phone}`} className="inline-flex items-center justify-center gap-2 h-11 rounded-md bg-gradient-primary text-primary-foreground font-bold text-sm uppercase tracking-wider shadow-elegant hover:opacity-95 transition-smooth">
-                  <Phone className="h-4 w-4" /> {listing.seller.phone}
-                </a>
-                <a href="#contact" className="inline-flex items-center justify-center gap-2 h-11 rounded-md bg-gradient-accent text-accent-foreground font-bold text-sm uppercase tracking-wider shadow-elegant hover:opacity-95 transition-smooth">
+                {isAuction ? (
+                  <button
+                    onClick={() => setDialog("auction")}
+                    className="inline-flex items-center justify-center gap-2 h-12 rounded-md bg-gradient-primary text-primary-foreground font-bold text-sm uppercase tracking-wider shadow-elegant hover:opacity-95 transition-smooth"
+                  >
+                    <Gavel className="h-4 w-4" /> {lang === "fr" ? "Participer à l'enchère" : "Bid on auction"}
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => setDialog("buy")}
+                    className="inline-flex items-center justify-center gap-2 h-12 rounded-md bg-gradient-primary text-primary-foreground font-bold text-sm uppercase tracking-wider shadow-elegant hover:opacity-95 transition-smooth"
+                  >
+                    <ShoppingCart className="h-4 w-4" /> {lang === "fr" ? "Acheter cet équipement" : "Buy this equipment"}
+                  </button>
+                )}
+                <button
+                  onClick={() => setDialog("info")}
+                  className="inline-flex items-center justify-center gap-2 h-11 rounded-md bg-gradient-accent text-accent-foreground font-bold text-sm uppercase tracking-wider shadow-elegant hover:opacity-95 transition-smooth"
+                >
                   <Mail className="h-4 w-4" /> {t("cta.contactSeller")}
+                </button>
+                <a href={`tel:${listing.seller.phone}`} className="inline-flex items-center justify-center gap-2 h-10 rounded-md border border-input bg-background font-semibold text-xs hover:bg-secondary transition-smooth">
+                  <Phone className="h-3.5 w-3.5" /> {listing.seller.phone}
                 </a>
               </div>
             </div>
 
-            {/* Financing */}
             <div className="bg-card border border-border rounded-lg shadow-card p-6">
               <h3 className="font-display text-base font-bold flex items-center gap-2"><Calculator className="h-4 w-4 text-accent" /> {t("detail.financing")}</h3>
               <p className="mt-3 font-display text-3xl font-extrabold text-foreground">
@@ -174,8 +194,7 @@ function DetailPage() {
               </div>
             </div>
 
-            {/* Seller */}
-            <div id="contact" className="bg-card border border-border rounded-lg shadow-card p-6">
+            <div className="bg-card border border-border rounded-lg shadow-card p-6">
               <h3 className="font-display text-base font-bold mb-3">{t("detail.seller")}</h3>
               <div className="flex items-start gap-3">
                 <div className="h-12 w-12 rounded-full bg-gradient-primary flex items-center justify-center text-primary-foreground font-bold">
@@ -188,14 +207,6 @@ function DetailPage() {
                   </p>
                 </div>
               </div>
-              <form onSubmit={(e) => { e.preventDefault(); alert(t("contact.sent")); }} className="mt-4 space-y-2">
-                <input placeholder={t("contact.name")} className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm" />
-                <input type="email" placeholder={t("contact.email")} className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm" />
-                <textarea rows={3} placeholder={t("contact.message")} className="w-full px-3 py-2 rounded-md border border-input bg-background text-sm" />
-                <button className="w-full h-10 rounded-md bg-primary text-primary-foreground text-sm font-bold hover:bg-primary-hover transition-smooth">
-                  {t("contact.send")}
-                </button>
-              </form>
             </div>
           </aside>
         </div>
@@ -209,6 +220,21 @@ function DetailPage() {
           </section>
         )}
       </div>
+
+      <ContactDialog
+        open={dialog !== null}
+        onClose={() => setDialog(null)}
+        intent={dialog ?? "info"}
+        vehicle={{
+          id: listing.id,
+          title: listing.title,
+          brand: listing.brand,
+          model: listing.model,
+          year: listing.year,
+          price: listing.price,
+          category: listing.category,
+        }}
+      />
     </PageLayout>
   );
 }
